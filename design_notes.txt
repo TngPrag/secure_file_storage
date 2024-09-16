@@ -1,6 +1,13 @@
 Project Structure and Design approach
 =====================================
-
+API specs:
+   API URL: http://127.0.0.1:8000/api/v0.1/upload/
+     Header: 
+           Content-type: multipart/form-data
+    Body:  
+           Form:   
+                key: 'file'
+                SelectFile: {}
 This project structure is organized for maintainability, scalability, and 
 separation of concerns, which aligns with Django's philosophy of clean and modular design.
 1. app/configs/
