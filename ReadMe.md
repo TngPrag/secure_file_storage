@@ -18,11 +18,11 @@ This is a Django-based file upload service that accepts a file, encrypts it, and
 1. Clone the repository:
    ```bash
    git clone https://github.com/TngPrag/secure_file_storage.git
-   cd PYTHONPROJECT/
+   cd secure_file_storage/
 2. Create a python virtual environment to avoid dependency conflict and activate it
-    sudo python3 -m venv myenv
-    source myenv/bin/activate
+   sudo python3 -m venv myenv
+   source myenv/bin/activate
 3. Install requirements/dependencies
-    sudo pip install -r requirements.txt
+   sudo pip install -r requirements.txt
 4. Start the server
-    python3 app/manage.py runserver
+   python3 app/manage.py runserver

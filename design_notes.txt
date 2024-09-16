@@ -1,0 +1,93 @@
+Project Structure and Design approach
+=====================================
+
+This project structure is organized for maintainability, scalability, and 
+separation of concerns, which aligns with Django's philosophy of clean and modular design.
+1. app/configs/
+
+    Purpose: This folder contains configuration files that define the behavior and setup of the entire Django application.
+    Contents:
+        settings.py: Stores the project's settings like database configurations, installed apps, middleware, etc.
+        urls.py: Manages the project's main URL routing. It includes references to the app-specific routes found in the routers/ folder.
+        wsgi.py: Serves as an entry point for WSGI-compatible web servers to serve the project.
+    Functionality: Centralizes configuration settings, enabling easy changes to core aspects of the project without affecting other parts of the code.
+
+2. app/fs/
+
+    Purpose: This folder contains file storage logic, handling where and how files are stored (local filesystem or cloud services like Amazon S3).
+    Contents:
+        storage.py: Provides functions for storing files in the file system or in an S3 bucket.
+    Functionality: Abstracts the file storage mechanism, making it easy to switch between local and cloud storage without changing the business logic.
+
+3. app/logic/
+
+    Purpose: This folder contains core functionality and business logic, separating the core processes from higher-level operations.
+    Subfolders:
+        core/: Holds fundamental functions that can be reused across different parts of the project.
+            encryption.py: Provides encryption functions (e.g., generating keys, encrypting files).
+        handlers/: Contains business logic that combines core functionality and application logic.
+            file_handler.py: Handles file uploads, encryption, and storage, integrating functionality from both core/ and fs/.
+    Functionality: Ensures that core logic and business rules are modular and reusable across different parts of the application.
+
+4. app/routers/
+
+    Purpose: Contains URL routing logic specific to the application's views, keeping routing isolated from the rest of the logic.
+    Contents:
+        file_routes.py: Defines the routes (URL endpoints) for file upload operations, rendering views and handling requests.
+    Functionality: Ensures that URL routing logic is clearly separated from business logic, enabling easier modifications to the routing layer.
+
+
+
+5. manage.py
+
+    Purpose: Django’s default command-line utility for executing tasks like running the development server, migrations, and more.
+    Functionality: Provides a convenient way to interact with Django’s internals.
+
+6. README.md
+
+    Purpose: Provides project documentation, explaining the purpose, structure, and setup instructions for the project.
+    Functionality: Helps other developers to understand and get started with the project quickly.
+
+7. requirements.txt
+
+    Purpose: Lists the dependencies required for the project.
+    Functionality: Ensures that all the necessary packages are installed in the environment.
+
+This structure is very well-suited for large-scale, maintainable Django projects for several reasons:
+
+    Separation of Concerns:
+        Each folder handles a specific aspect of the project, 
+        e.g., fs/ for file storage, logic/ for business and core logic, and routers/ 
+        for URL routing. This makes the project modular, easier to maintain, and allows 
+        changes to one part of the system without affecting others.
+
+    Scalability:
+        As the project grows, it's easier to add new functionality or services 
+        without cluttering existing files. For example, you can easily add new routes 
+        in routers/ or new business logic in logic/handlers/.
+
+    Modularity:
+        By organizing the code into distinct modules (fs, core, handlers), 
+        it's easier to reuse or modify parts of the application, such as switching 
+        from local file storage to cloud storage (S3) without changing much of the codebase.
+
+    Adaptability:
+        This structure makes it easy to adapt to other frameworks or technologies in the future. 
+        For example, if you want to move file handling to another service, you would only need to update the fs/ folder.
+
+    Project Complexity:
+        This structure might be more complex than the default Django project structure, 
+        but it's ideal for more advanced projects. For simpler applications, this structure 
+        might feel like overkill.
+
+Comparison with Typical Django Structure
+
+In a standard Django project, most of the functionality would be contained in the views.py, 
+models.py, and urls.py files within the app folders. However, this approach can lead to 
+bloated files and a harder-to-maintain structure over time, especially for larger projects.
+
+The structure above is more aligned with "Domain-Driven Design" principles and clean architecture, which are better suited for larger and more complex projects. It makes the project:
+
+    More maintainable.
+    Easier to test.
+    Easier to scale as the business logic grows.
